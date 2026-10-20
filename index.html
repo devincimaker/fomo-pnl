@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fomo PnL</title>
+<style>
+  :root { --bg:#0b0a14; --card:#15132a; --line:#2a2747; --text:#ecebf5; --muted:#8c89a8; --accent:#8b7cff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,sans-serif; }
+  main { max-width:560px; margin:0 auto; padding:40px 16px; }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { color:var(--muted); }
+  ol { padding-left:20px; }
+  li { margin:10px 0; }
+  .bm { display:inline-block; margin:20px 0; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; padding:12px 20px; border-radius:10px; cursor:grab; }
+  .bm[aria-disabled] { opacity:.5; }
+  a { color:var(--accent); }
+  kbd { background:var(--card); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>fomo all-time PnL</h1>
+  <p>A bookmark that shows anyone's all-time PnL right on fomo.family, using your existing fomo login.</p>
+  <a class="bm" id="bm" href="#" aria-disabled="true">fomo PnL</a>
+  <ol>
+    <li>Drag the purple button onto your bookmarks bar (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> shows it).</li>
+    <li>Go to <a href="https://fomo.family/leaderboard" target="_blank">fomo.family</a> while logged in.</li>
+    <li>Click the bookmark. On someone's profile page it looks them up automatically; anywhere else, type a handle.</li>
+  </ol>
+  <p>If it says the login expired, reload the fomo page and click again.</p>
+</main>
+<script>
+  fetch("/bookmarklet.js").then((r) => r.text()).then((src) => {
+    const bm = document.getElementById("bm");
+    bm.href = "javascript:" + encodeURIComponent(src);
+    bm.removeAttribute("aria-disabled");
+  });
+  document.getElementById("bm").addEventListener("click", (e) => e.preventDefault());
+</script>
+</body>
+</html>
